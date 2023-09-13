@@ -42,7 +42,9 @@ import org.ostis.scmemory.websocketmemory.memory.exception.ExceptionMessages;
 import org.ostis.scmemory.websocketmemory.memory.message.request.CheckScElTypeRequestImpl;
 import org.ostis.scmemory.websocketmemory.memory.message.request.CreateScElRequestImpl;
 import org.ostis.scmemory.websocketmemory.memory.message.request.DeleteScElRequestImpl;
+import org.ostis.scmemory.websocketmemory.memory.message.request.FindByNameRequestImpl;
 import org.ostis.scmemory.websocketmemory.memory.message.request.FindByPatternRequestImpl;
+import org.ostis.scmemory.websocketmemory.memory.message.request.FindStringBySubstringRequestImpl;
 import org.ostis.scmemory.websocketmemory.memory.message.request.GenerateByPatternRequestImpl;
 import org.ostis.scmemory.websocketmemory.memory.message.request.GetLinkContentRequestImpl;
 import org.ostis.scmemory.websocketmemory.memory.message.request.KeynodeRequestImpl;
@@ -62,7 +64,9 @@ import org.ostis.scmemory.websocketmemory.memory.structures.ScConstruction5Impl;
 import org.ostis.scmemory.websocketmemory.message.request.CheckScElTypeRequest;
 import org.ostis.scmemory.websocketmemory.message.request.CreateScElRequest;
 import org.ostis.scmemory.websocketmemory.message.request.DeleteScElRequest;
+import org.ostis.scmemory.websocketmemory.message.request.FindByNameRequest;
 import org.ostis.scmemory.websocketmemory.message.request.FindByPatternRequest;
+import org.ostis.scmemory.websocketmemory.message.request.FindStringBySubstringRequest;
 import org.ostis.scmemory.websocketmemory.message.request.GenerateByPatternRequest;
 import org.ostis.scmemory.websocketmemory.message.request.GetLinkContentRequest;
 import org.ostis.scmemory.websocketmemory.message.request.KeynodeRequest;
@@ -70,7 +74,9 @@ import org.ostis.scmemory.websocketmemory.message.request.EventRequest;
 import org.ostis.scmemory.websocketmemory.message.response.CheckScElTypeResponse;
 import org.ostis.scmemory.websocketmemory.message.response.CreateScElResponse;
 import org.ostis.scmemory.websocketmemory.message.response.DeleteScElResponse;
+import org.ostis.scmemory.websocketmemory.message.response.FindByNameResponce;
 import org.ostis.scmemory.websocketmemory.message.response.FindByPatternResponse;
+import org.ostis.scmemory.websocketmemory.message.response.FindStringBySubstringResponse;
 import org.ostis.scmemory.websocketmemory.message.response.GenerateByPatternResponse;
 import org.ostis.scmemory.websocketmemory.message.response.GetLinkContentResponse;
 import org.ostis.scmemory.websocketmemory.message.response.KeynodeResponse;
@@ -80,6 +86,7 @@ import org.ostis.scmemory.websocketmemory.sender.RequestSender;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.lang.annotation.ElementType;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -657,6 +664,34 @@ public class SyncOstisScMemory implements ScMemory {
                                   .findFirst();
         eventConsumerMap.put(result.get(), new ScEventWebsocketImpl(element, event));
         return result;
+    }
+
+    @Override
+    public Stream<List<String>> findStringBySubstring(String data) throws ScMemoryException {
+        FindStringBySubstringRequest request = new FindStringBySubstringRequestImpl();
+        request.setRequest(data);
+        FindStringBySubstringResponse res = requestSender.sendFindStringBySubstringRequest(request);
+        Optional<List<String>> result = res.getMatches().findFirst();
+        return result.stream();
+    }
+
+    @Override
+    public Stream<Optional<? extends ScElement>> findByName(Stream<String> name) throws ScMemoryException {
+        FindByNameRequest request = new FindByNameRequestImpl();
+        List<String> content = name.toList();
+        request.addComponent(content.stream().toList());
+        FindByNameResponce response = requestSender.sendFindByNameRequest(request);
+
+        List<Optional<? extends ScElement>> result = new ArrayList<>(content.size());
+        for (List<Long> e : response.getFoundAddresses()
+                              .toList()) {
+            if (e.get(0) != 0) {
+                ScElement node;
+                node = () -> (e.get(0));
+                result.add(Optional.of(node));
+            } else result.add(Optional.empty());
+        }
+        return result.stream();
     }
 
     @Override

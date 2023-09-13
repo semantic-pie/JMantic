@@ -4,7 +4,9 @@ import org.ostis.scmemory.model.exception.ScMemoryException;
 import org.ostis.scmemory.websocketmemory.message.request.CheckScElTypeRequest;
 import org.ostis.scmemory.websocketmemory.message.request.CreateScElRequest;
 import org.ostis.scmemory.websocketmemory.message.request.DeleteScElRequest;
+import org.ostis.scmemory.websocketmemory.message.request.FindByNameRequest;
 import org.ostis.scmemory.websocketmemory.message.request.FindByPatternRequest;
+import org.ostis.scmemory.websocketmemory.message.request.FindStringBySubstringRequest;
 import org.ostis.scmemory.websocketmemory.message.request.GenerateByPatternRequest;
 import org.ostis.scmemory.websocketmemory.message.request.GetLinkContentRequest;
 import org.ostis.scmemory.websocketmemory.message.request.KeynodeRequest;
@@ -14,7 +16,9 @@ import org.ostis.scmemory.websocketmemory.message.request.EventRequest;
 import org.ostis.scmemory.websocketmemory.message.response.CheckScElTypeResponse;
 import org.ostis.scmemory.websocketmemory.message.response.CreateScElResponse;
 import org.ostis.scmemory.websocketmemory.message.response.DeleteScElResponse;
+import org.ostis.scmemory.websocketmemory.message.response.FindByNameResponce;
 import org.ostis.scmemory.websocketmemory.message.response.FindByPatternResponse;
+import org.ostis.scmemory.websocketmemory.message.response.FindStringBySubstringResponse;
 import org.ostis.scmemory.websocketmemory.message.response.GenerateByPatternResponse;
 import org.ostis.scmemory.websocketmemory.message.response.GetLinkContentResponse;
 import org.ostis.scmemory.websocketmemory.message.response.KeynodeResponse;
@@ -109,4 +113,8 @@ public interface RequestSender {
     CheckScElTypeResponse sendCheckScElTypeRequest(CheckScElTypeRequest request) throws ScMemoryException;
 
     EventResponse sendEventRequest(EventRequest request) throws ScMemoryException;
+
+    FindStringBySubstringResponse sendFindStringBySubstringRequest(FindStringBySubstringRequest request) throws ScMemoryException;
+
+    FindByNameResponce sendFindByNameRequest(FindByNameRequest request) throws ScMemoryException;
 }

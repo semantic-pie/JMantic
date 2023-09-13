@@ -19,6 +19,7 @@ import org.ostis.scmemory.model.pattern.pattern5.ScConstruction5;
 import org.ostis.scmemory.model.pattern.pattern5.ScPattern5;
 
 import java.io.ByteArrayOutputStream;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -249,6 +250,10 @@ public interface ScMemory {
     Stream<? extends ScNode> resolveKeynodes(Stream<String> idtf, Stream<NodeType> type) throws ScMemoryException;
 
     Optional<Long> subscribeOnEvent(ScElement element, ScEventConsumer event) throws ScMemoryException;
+
+    Stream<List<String>> findStringBySubstring(String data) throws ScMemoryException;
+
+    Stream<Optional<? extends ScElement>> findByName(Stream<String> name) throws ScMemoryException;
 
     void unsubscribeEvent(Stream<Long> eventId) throws ScMemoryException;
 

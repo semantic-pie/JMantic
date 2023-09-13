@@ -410,6 +410,12 @@ public class DefaultScContext {
                      .get();
     }
 
+    public Optional<? extends ScElement> findByName(String name) throws ScMemoryException {
+        return memory.findByName(Stream.of(name))
+                     .findFirst()
+                     .get();
+    }
+
     /**
      * Keynodes resolver.
      * This method resolves keynode with a specific identifier.
@@ -426,6 +432,8 @@ public class DefaultScContext {
                      .findFirst()
                      .get();
     }
+
+
 
 
 }
