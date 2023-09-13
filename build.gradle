@@ -2,11 +2,10 @@ plugins {
     id 'java'
     id 'maven-publish'
     id 'jacoco'
-    id 'signing'
 }
 
 group 'org.semanticpie'
-version '0.7.1'
+version '0.7.2'
 
 sourceCompatibility = 17
 targetCompatibility = 17
@@ -28,11 +27,12 @@ test {
     useJUnitPlatform()
 }
 
+
 jar {
     from {
         configurations.runtimeClasspath.filter { it.exists() }.collect { it.isDirectory() ? it : zipTree(it) }
     }
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    duplicatesStrategy DuplicatesStrategy.EXCLUDE
 }
 
 jacocoTestReport {
@@ -44,6 +44,7 @@ jacocoTestReport {
         csv.required = true
         html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
     }
+
 }
 
 java {
@@ -53,40 +54,13 @@ java {
 
 publishing {
     publications {
-        gpr(MavenPublication) {
+        maven(MavenPublication) {
             groupId 'org.semanticpie'
             artifactId 'jmantic'
-            version '0.7.1'
-            from components.java
-            pom {
-                name = 'JMantic'
-                description = 'JMantic is a java library for working with the sc-memory of the OSTIS project over the websocket protocol'
-                url = 'https://github.com/semantic-pie/JMantic'
-                licenses {
-                    license {
-                        name = 'MIT'
-                        url = 'https://opensource.org/licenses/MIT'
-                    }
-                }
-                developers {
-                    developer {
-                        id = 'artrayme'
-                        name = 'Artemy V'
-                        email = 'artrayme@protonmail.com'
-                    }
-                }
-                scm {
-                    developerConnection = 'scm:git:https://github.com/semantic-pie/JMantic.git'
-                    url = 'https://github.com/semantic-pie/JMantic'
-                }
-            }
-        }
+            version '0.7.2'
 
-        mavenJava(MavenPublication) {
-            groupId 'org.semanticpie'
-            artifactId 'jmantic'
-            version '0.7.1'
             from components.java
+
             pom {
                 name = 'JMantic'
                 description = 'JMantic is a java library for working with the sc-memory of the OSTIS project over the websocket protocol'
@@ -95,13 +69,6 @@ publishing {
                     license {
                         name = 'MIT'
                         url = 'https://opensource.org/licenses/MIT'
-                    }
-                }
-                developers {
-                    developer {
-                        id = 'artrayme'
-                        name = 'Artemy V'
-                        email = 'artrayme@protonmail.com'
                     }
                 }
                 scm {
@@ -114,8 +81,7 @@ publishing {
 
     repositories {
         maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/semantic-pie/jmantic")
+            url 'https://maven.pkg.github.com/semantic-pie/jmantic'
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")
@@ -124,13 +90,6 @@ publishing {
     }
 }
 
-signing {
-    def signingKey = System.getenv("GPG_KEY")
-    def signingPassword = System.getenv("GPG_PASSWORD")
-    useInMemoryPgpKeys(signingKey, signingPassword)
-    sign publishing.publications.mavenJava
-    sign publishing.publications.gpr
-}
 
 javadoc {
     if (JavaVersion.current().isJava9Compatible()) {
