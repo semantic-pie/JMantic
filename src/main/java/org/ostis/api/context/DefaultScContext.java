@@ -11,15 +11,19 @@ import org.ostis.scmemory.model.element.link.ScLinkInteger;
 import org.ostis.scmemory.model.element.link.ScLinkString;
 import org.ostis.scmemory.model.element.node.NodeType;
 import org.ostis.scmemory.model.element.node.ScNode;
+import org.ostis.scmemory.model.event.ScEventConsumer;
 import org.ostis.scmemory.model.exception.ScMemoryException;
 import org.ostis.scmemory.model.pattern.ScPattern;
 import org.ostis.scmemory.model.pattern.factory.DefaultScPattern3Factory;
 import org.ostis.scmemory.model.pattern.pattern3.ScConstruction3;
 import org.ostis.scmemory.model.pattern.pattern3.ScPattern3;
+import org.ostis.scmemory.model.pattern.pattern3.ScPattern3Impl;
 import org.ostis.scmemory.model.pattern.pattern5.ScConstruction5;
 import org.ostis.scmemory.model.pattern.pattern5.ScPattern5;
 
 import java.io.ByteArrayOutputStream;
+import java.util.EnumSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -33,16 +37,7 @@ import java.util.stream.Stream;
  * @since 0.2.0
  */
 
-public class DefaultScContext {
-    private final ScMemory memory;
-
-    public DefaultScContext(ScMemory memory) {
-        this.memory = memory;
-    }
-
-    public ScMemory getMemory() {
-        return memory;
-    }
+public record DefaultScContext(ScMemory memory) {
 
     /**
      * Node creating.
@@ -55,7 +50,7 @@ public class DefaultScContext {
     public ScNode createNode(NodeType type) throws ScMemoryException {
         return memory.createNodes(Stream.of(type))
                      .findFirst()
-                     .get();
+                     .orElseThrow(ScMemoryException::new);
     }
 
     /**
@@ -87,7 +82,7 @@ public class DefaultScContext {
                              Stream.of(source),
                              Stream.of(target))
                      .findFirst()
-                     .get();
+                     .orElseThrow(ScMemoryException::new);
     }
 
     /**
@@ -127,7 +122,7 @@ public class DefaultScContext {
                              Stream.of(type),
                              Stream.of(content))
                      .findFirst()
-                     .get();
+                     .orElseThrow(ScMemoryException::new);
     }
 
     /**
@@ -144,7 +139,7 @@ public class DefaultScContext {
                              Stream.of(type),
                              Stream.of(content))
                      .findFirst()
-                     .get();
+                     .orElseThrow(ScMemoryException::new);
     }
 
     /**
@@ -161,7 +156,7 @@ public class DefaultScContext {
                              Stream.of(type),
                              Stream.of(content))
                      .findFirst()
-                     .get();
+                     .orElseThrow(ScMemoryException::new);
     }
 
     /**
@@ -175,10 +170,10 @@ public class DefaultScContext {
      */
     public ScLinkBinary createBinaryLink(LinkType type, ByteArrayOutputStream content) throws ScMemoryException {
         return memory.createBinaryLinks(
-                Stream.of(type),
-                Stream.of(content))
-                .findFirst()
-                .get();
+                             Stream.of(type),
+                             Stream.of(content))
+                     .findFirst()
+                     .orElseThrow(ScMemoryException::new);
     }
 
     /**
@@ -286,7 +281,7 @@ public class DefaultScContext {
                              Stream.of(link),
                              Stream.of(content))
                      .findFirst()
-                     .get();
+                     .orElseThrow(ScMemoryException::new);
     }
 
     /**
@@ -303,7 +298,7 @@ public class DefaultScContext {
                              Stream.of(link),
                              Stream.of(content))
                      .findFirst()
-                     .get();
+                     .orElseThrow(ScMemoryException::new);
     }
 
     /**
@@ -320,7 +315,7 @@ public class DefaultScContext {
                              Stream.of(link),
                              Stream.of(content))
                      .findFirst()
-                     .get();
+                     .orElseThrow(ScMemoryException::new);
     }
 
     /**
@@ -332,12 +327,12 @@ public class DefaultScContext {
      * @return true when executed successfully.
      * @throws ScMemoryException if an internal sc-memory error has occurred. You can find more information in cause exception
      */
-    public Boolean setBinaryLinkContent(ScLinkBinary link, ByteArrayOutputStream content) throws ScMemoryException{
+    public Boolean setBinaryLinkContent(ScLinkBinary link, ByteArrayOutputStream content) throws ScMemoryException {
         return memory.setBinaryLinkContent(
-                Stream.of(link),
-                Stream.of(content))
-                .findFirst()
-                .get();
+                             Stream.of(link),
+                             Stream.of(content))
+                     .findFirst()
+                     .orElseThrow(ScMemoryException::new);
     }
 
     /**
@@ -351,7 +346,7 @@ public class DefaultScContext {
     public Integer getIntegerLinkContent(ScLinkInteger link) throws ScMemoryException {
         return memory.getIntegerLinkContent(Stream.of(link))
                      .findFirst()
-                     .get();
+                     .orElseThrow(ScMemoryException::new);
     }
 
     /**
@@ -365,7 +360,7 @@ public class DefaultScContext {
     public Float getFloatLinkContent(ScLinkFloat link) throws ScMemoryException {
         return memory.getFloatLinkContent(Stream.of(link))
                      .findFirst()
-                     .get();
+                     .orElseThrow(ScMemoryException::new);
     }
 
     /**
@@ -379,7 +374,7 @@ public class DefaultScContext {
     public String getStringLinkContent(ScLinkString link) throws ScMemoryException {
         return memory.getStringLinkContent(Stream.of(link))
                      .findFirst()
-                     .get();
+                     .orElseThrow(ScMemoryException::new);
     }
 
     /**
@@ -390,10 +385,10 @@ public class DefaultScContext {
      * @return link content
      * @throws ScMemoryException if an internal sc-memory error has occurred. You can find more information in cause exception
      */
-    public ByteArrayOutputStream getBinaryLinkContent(ScLinkBinary link) throws ScMemoryException{
+    public ByteArrayOutputStream getBinaryLinkContent(ScLinkBinary link) throws ScMemoryException {
         return memory.getBinaryLinkContent(Stream.of(link))
-                .findFirst()
-                .get();
+                     .findFirst()
+                     .orElseThrow(ScMemoryException::new);
     }
 
     /**
@@ -407,13 +402,13 @@ public class DefaultScContext {
     public Optional<? extends ScNode> findKeynode(String idtf) throws ScMemoryException {
         return memory.findKeynodes(Stream.of(idtf))
                      .findFirst()
-                     .get();
+                     .orElseThrow(ScMemoryException::new);
     }
 
     public Optional<? extends ScElement> findByName(String name) throws ScMemoryException {
         return memory.findByName(Stream.of(name))
                      .findFirst()
-                     .get();
+                     .orElseThrow(ScMemoryException::new);
     }
 
     /**
@@ -430,10 +425,60 @@ public class DefaultScContext {
                              Stream.of(idtf),
                              Stream.of(type))
                      .findFirst()
-                     .get();
+                     .orElseThrow(ScMemoryException::new);
+    }
+    /**
+     * Edges resolver.
+     * This method resolves keynode with a specific identifier.
+     *
+     * @param source object of source element.
+     * @param type type of edge that will be created, must be only VAR types
+     * @param target object of target element.
+     * @return resolved edge. If edge with connection from source to target does not exist - a new edge will be created.
+     * @throws ScMemoryException if an internal sc-memory error has occurred. You can find more information in cause exception
+     */
+    public ScEdge resolveEdge(ScElement source, EdgeType type, ScElement target) throws ScMemoryException {
+        Optional<? extends ScConstruction3<ScElement, ScElement>> pattern = find(new ScPattern3Impl<>(source, type, target)).findFirst();
+
+        EdgeType constType = EnumSet.allOf(EdgeType.class)
+                                    .stream()
+                                    .filter(edgeType -> edgeType.getCode() == type.getCode() - 32)
+                                    .findFirst()
+                                    .orElseThrow();
+
+        return pattern.isEmpty() ? createEdge(constType, source, target) : pattern.get().getEdge();
     }
 
+    /**
+     * Find all strings that include substring in SCLinks
+     *
+     * @param data substring for searching
+     * @return List of strings that includes data
+     * @throws ScMemoryException if an internal sc-memory error has occurred. You can find more information in cause exception
+     */
+    public List<String> findStringBySubstring(String data) throws ScMemoryException {
+        return this.memory.findStringBySubstring(data).flatMap(List::stream).toList();
+    }
 
+    /**
+     * Method for subscribe on some event of sc-machine. See {@link ScEventConsumer} for types
+     * @param element The element whose changes will be subscribed to.
+     * @param consumer Handler of changes.
+     * @return EventID
+     * @throws ScMemoryException if an internal sc-memory error has occurred. You can find more information in cause exception
+     */
+    public Optional<Long> subscribeOnEvent(ScElement element, ScEventConsumer consumer) throws ScMemoryException {
+        return this.memory.subscribeOnEvent(element, consumer);
+    }
 
+    /**
+     * Unsubscribes from the event with the specified ID.
+     *
+     * @param  eventId ID of the event to unsubscribe from
+     * @throws ScMemoryException if an error occurs while working with memory
+     */
+    public void unSubscribeOnEvent(Long eventId) throws ScMemoryException {
+        this.memory.unsubscribeEvent(Stream.of(eventId));
+    }
 
 }
