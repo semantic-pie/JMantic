@@ -274,4 +274,6 @@ public interface ScMemory {
      * @since 0.3.0
      */
     void close() throws Exception;
+
+    boolean isOpen();
 }

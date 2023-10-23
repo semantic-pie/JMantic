@@ -716,6 +716,11 @@ public class SyncOstisScMemory implements ScMemory {
         eventOstisClient.close();
     }
 
+    @Override
+    public boolean isOpen() {
+       return ostisClient.isOpen() && eventOstisClient.isOpen();
+    }
+
     private ScPatternElement convertToPatternElement(Object object, ScAliasedElement alias) {
         if (object instanceof ScElement element) {
             return new FixedPatternElement(element);
