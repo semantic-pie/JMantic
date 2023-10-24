@@ -86,7 +86,6 @@ import org.ostis.scmemory.websocketmemory.sender.RequestSender;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.lang.annotation.ElementType;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Base64;

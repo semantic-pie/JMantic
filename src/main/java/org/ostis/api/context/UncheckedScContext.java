@@ -1,5 +1,6 @@
 package org.ostis.api.context;
 
+import lombok.extern.slf4j.Slf4j;
 import org.ostis.scmemory.model.ScMemory;
 import org.ostis.scmemory.model.element.ScElement;
 import org.ostis.scmemory.model.element.edge.EdgeType;
@@ -17,8 +18,6 @@ import org.ostis.scmemory.model.pattern.pattern3.ScConstruction3;
 import org.ostis.scmemory.model.pattern.pattern3.ScPattern3;
 import org.ostis.scmemory.model.pattern.pattern5.ScConstruction5;
 import org.ostis.scmemory.model.pattern.pattern5.ScPattern5;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Optional;
@@ -28,8 +27,9 @@ import java.util.stream.Stream;
  * @author artrayme
  * @since 0.0.1
  */
+@Slf4j
 public class UncheckedScContext {
-    private final static Logger logger = LoggerFactory.getLogger(UncheckedScContext.class);
+   
     private final ScMemory memory;
 
     public UncheckedScContext(ScMemory memory) {
@@ -53,7 +53,7 @@ public class UncheckedScContext {
             result = memory.createNodes(Stream.of(type))
                            .findFirst();
         } catch (ScMemoryException e) {
-            logger.error(
+            log.error(
                     "It's really bad",
                     e);
             throw new RuntimeException(e);
@@ -74,7 +74,7 @@ public class UncheckedScContext {
         try {
             result = memory.createNodes(types);
         } catch (ScMemoryException e) {
-            logger.error(
+            log.error(
                     "It's really bad",
                     e);
             throw new RuntimeException(e);
@@ -100,7 +100,7 @@ public class UncheckedScContext {
                                  Stream.of(target))
                          .findFirst();
         } catch (ScMemoryException e) {
-            logger.error(
+            log.error(
                     "It's really bad",
                     e);
             throw new RuntimeException(e);
@@ -130,7 +130,7 @@ public class UncheckedScContext {
                                          sources,
                                          targets);
         } catch (ScMemoryException e) {
-            logger.error(
+            log.error(
                     "It's really bad",
                     e);
             throw new RuntimeException(e);
@@ -154,7 +154,7 @@ public class UncheckedScContext {
                                    Stream.of(content))
                            .findFirst();
         } catch (ScMemoryException e) {
-            logger.error(
+            log.error(
                     "It's really bad",
                     e);
             throw new RuntimeException(e);
@@ -178,7 +178,7 @@ public class UncheckedScContext {
                                    Stream.of(content))
                            .findFirst();
         } catch (ScMemoryException e) {
-            logger.error(
+            log.error(
                     "It's really bad",
                     e);
             throw new RuntimeException(e);
@@ -202,7 +202,7 @@ public class UncheckedScContext {
                                    Stream.of(content))
                            .findFirst();
         } catch (ScMemoryException e) {
-            logger.error(
+            log.error(
                     "It's really bad",
                     e);
             throw new RuntimeException(e);
@@ -226,7 +226,7 @@ public class UncheckedScContext {
                                    Stream.of(content))
                            .findFirst();
         } catch (ScMemoryException e) {
-            logger.error(
+            log.error(
                     "It's really bad",
                     e);
             throw new RuntimeException(e);
@@ -246,7 +246,7 @@ public class UncheckedScContext {
         try {
             result = memory.deleteElements(Stream.of(element));
         } catch (ScMemoryException e) {
-            logger.error(
+            log.error(
                     "It's really bad",
                     e);
             throw new RuntimeException(e);
@@ -266,7 +266,7 @@ public class UncheckedScContext {
         try {
             result = memory.deleteElements(elements);
         } catch (ScMemoryException e) {
-            logger.error(
+            log.error(
                     "It's really bad",
                     e);
             throw new RuntimeException(e);
@@ -287,7 +287,7 @@ public class UncheckedScContext {
         try {
             result = memory.findByPattern3(pattern);
         } catch (ScMemoryException e) {
-            logger.error(
+            log.error(
                     "It's really bad",
                     e);
             throw new RuntimeException(e);
@@ -309,7 +309,7 @@ public class UncheckedScContext {
         try {
             result = memory.findByPattern5(pattern);
         } catch (ScMemoryException e) {
-            logger.error(
+            log.error(
                     "It's really bad",
                     e);
             throw new RuntimeException(e);
@@ -334,7 +334,7 @@ public class UncheckedScContext {
         try {
             result = memory.find(pattern);
         } catch (ScMemoryException e) {
-            logger.error(
+            log.error(
                     "It's really bad",
                     e);
             throw new RuntimeException(e);
@@ -357,7 +357,7 @@ public class UncheckedScContext {
                     Stream.of(link),
                     Stream.of(content));
         } catch (ScMemoryException e) {
-            logger.error(
+            log.error(
                     "It's really bad",
                     e);
             throw new RuntimeException(e);
@@ -381,7 +381,7 @@ public class UncheckedScContext {
                     Stream.of(link),
                     Stream.of(content));
         } catch (ScMemoryException e) {
-            logger.error(
+            log.error(
                     "It's really bad",
                     e);
             throw new RuntimeException(e);
@@ -405,7 +405,7 @@ public class UncheckedScContext {
                     Stream.of(link),
                     Stream.of(content));
         } catch (ScMemoryException e) {
-            logger.error(
+            log.error(
                     "It's really bad",
                     e);
             throw new RuntimeException(e);
@@ -429,7 +429,7 @@ public class UncheckedScContext {
                     Stream.of(link),
                     Stream.of(content));
         } catch (ScMemoryException e) {
-            logger.error(
+            log.error(
                     "It's really bad",
                     e);
             throw new RuntimeException(e);
@@ -477,7 +477,7 @@ public class UncheckedScContext {
         try {
             result = memory.getIntegerLinkContent(Stream.of(link));
         } catch (ScMemoryException e) {
-            logger.error(
+            log.error(
                     "It's really bad",
                     e);
             throw new RuntimeException(e);
@@ -498,7 +498,7 @@ public class UncheckedScContext {
         try {
             result = memory.getFloatLinkContent(Stream.of(link));
         } catch (ScMemoryException e) {
-            logger.error(
+            log.error(
                     "It's really bad",
                     e);
             throw new RuntimeException(e);
@@ -519,7 +519,7 @@ public class UncheckedScContext {
         try {
             result = memory.getStringLinkContent(Stream.of(link));
         } catch (ScMemoryException e) {
-            logger.error(
+            log.error(
                     "It's really bad",
                     e);
             throw new RuntimeException(e);
@@ -540,7 +540,7 @@ public class UncheckedScContext {
         try {
             result = memory.getBinaryLinkContent(Stream.of(link));
         } catch (ScMemoryException e) {
-            logger.error(
+            log.error(
                     "It's really bad",
                     e);
             throw new RuntimeException(e);
@@ -563,7 +563,7 @@ public class UncheckedScContext {
                            .findFirst()
                            .get();
         } catch (ScMemoryException e) {
-            logger.error(
+            log.error(
                     "It's really bad",
                     e);
             throw new RuntimeException(e);
@@ -588,7 +588,7 @@ public class UncheckedScContext {
                            .findFirst()
                            .get();
         } catch (ScMemoryException e) {
-            logger.error(
+            log.error(
                     "It's really bad",
                     e);
             throw new RuntimeException(e);

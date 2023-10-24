@@ -1,8 +1,9 @@
 module JMantic.main {
     requires com.fasterxml.jackson.annotation;
     requires com.fasterxml.jackson.databind;
-    requires org.slf4j;
     requires jakarta.websocket;
+    requires lombok;
+    requires org.slf4j;
 
     //    exporting usable public api
     exports org.ostis.api.context;
