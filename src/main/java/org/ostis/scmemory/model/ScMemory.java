@@ -245,14 +245,26 @@ public interface ScMemory {
     Stream<Optional<? extends ScNode>> findKeynodes(Stream<String> idtf) throws ScMemoryException;
 
     /**
+     * Method for get ScNode if exists, or creating it if not
      * @since 0.6.0
      */
     Stream<? extends ScNode> resolveKeynodes(Stream<String> idtf, Stream<NodeType> type) throws ScMemoryException;
 
     Optional<Long> subscribeOnEvent(ScElement element, ScEventConsumer event) throws ScMemoryException;
 
+    /**
+     * Method for getting the sc-elements by content
+     *
+     * @param data content for finding
+     * @return stream of found sc-elements
+     */
     Stream<List<String>> findStringBySubstring(String data) throws ScMemoryException;
-
+    /**
+     * Method for getting the sc-element by main identification
+     *
+     * @param name content for finding
+     * @return stream of found sc-elements
+     */
     Stream<Optional<? extends ScElement>> findByName(Stream<String> name) throws ScMemoryException;
 
     void unsubscribeEvent(Stream<Long> eventId) throws ScMemoryException;
