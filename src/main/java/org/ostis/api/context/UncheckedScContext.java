@@ -1,5 +1,6 @@
 package org.ostis.api.context;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.ostis.scmemory.model.ScMemory;
 import org.ostis.scmemory.model.element.ScElement;
@@ -27,17 +28,14 @@ import java.util.stream.Stream;
  * @author artrayme
  * @since 0.0.1
  */
-@Slf4j
+@Getter
+@Slf4j(topic = "Memory")
 public class UncheckedScContext {
    
     private final ScMemory memory;
 
     public UncheckedScContext(ScMemory memory) {
         this.memory = memory;
-    }
-
-    public ScMemory getMemory() {
-        return memory;
     }
 
     /**

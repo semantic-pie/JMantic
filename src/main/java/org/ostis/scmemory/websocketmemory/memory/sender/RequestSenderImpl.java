@@ -54,7 +54,7 @@ import java.net.URI;
  * @author Michael
  * @since 0.0.1
  */
-@Slf4j
+@Slf4j(topic = "RequestSender")
 public class RequestSenderImpl implements RequestSender {
     private final OstisClient client;
     private final ObjectMapper mapper;
@@ -132,17 +132,23 @@ public class RequestSenderImpl implements RequestSender {
 
     @Override
     public EventResponse sendEventRequest(EventRequest request) throws ScMemoryException {
-        return send(request, EventResponseImpl.class);
+        return send(
+                request,
+                EventResponseImpl.class);
     }
 
     @Override
     public FindStringBySubstringResponse sendFindStringBySubstringRequest(FindStringBySubstringRequest request) throws ScMemoryException {
-        return send(request, FindStringBySubstringResponseImpl.class);
+        return send(
+                request,
+                FindStringBySubstringResponseImpl.class);
     }
 
     @Override
     public FindByNameResponce sendFindByNameRequest(FindByNameRequest request) throws ScMemoryException {
-        return send(request, FindByNameResponseImpl.class);
+        return send(
+                request,
+                FindByNameResponseImpl.class);
     }
 
     /**

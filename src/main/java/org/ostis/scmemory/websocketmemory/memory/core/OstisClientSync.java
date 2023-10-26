@@ -30,7 +30,7 @@ import java.util.function.Consumer;
  * @author Michael
  * @since 0.7.0
  */
-@Slf4j
+@Slf4j(topic = "OstisClient")
 public class OstisClientSync implements OstisClient {
 
     private final OstisWebsocketClient webSocketClient;
