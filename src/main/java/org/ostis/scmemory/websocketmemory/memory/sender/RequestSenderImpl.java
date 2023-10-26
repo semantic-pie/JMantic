@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import lombok.extern.slf4j.Slf4j;
 import org.ostis.scmemory.model.exception.ScMemoryException;
 import org.ostis.scmemory.websocketmemory.core.OstisClient;
 import org.ostis.scmemory.websocketmemory.memory.exception.OstisConnectionException;
@@ -42,8 +43,6 @@ import org.ostis.scmemory.websocketmemory.message.response.KeynodeResponse;
 import org.ostis.scmemory.websocketmemory.message.response.SetLinkContentResponse;
 import org.ostis.scmemory.websocketmemory.message.response.EventResponse;
 import org.ostis.scmemory.websocketmemory.sender.RequestSender;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 
@@ -55,8 +54,8 @@ import java.net.URI;
  * @author Michael
  * @since 0.0.1
  */
+@Slf4j(topic = "RequestSender")
 public class RequestSenderImpl implements RequestSender {
-    private final static Logger logger = LoggerFactory.getLogger(RequestSenderImpl.class);
     private final OstisClient client;
     private final ObjectMapper mapper;
     private final ObjectWriter writer;
@@ -133,17 +132,23 @@ public class RequestSenderImpl implements RequestSender {
 
     @Override
     public EventResponse sendEventRequest(EventRequest request) throws ScMemoryException {
-        return send(request, EventResponseImpl.class);
+        return send(
+                request,
+                EventResponseImpl.class);
     }
 
     @Override
     public FindStringBySubstringResponse sendFindStringBySubstringRequest(FindStringBySubstringRequest request) throws ScMemoryException {
-        return send(request, FindStringBySubstringResponseImpl.class);
+        return send(
+                request,
+                FindStringBySubstringResponseImpl.class);
     }
 
     @Override
     public FindByNameResponce sendFindByNameRequest(FindByNameRequest request) throws ScMemoryException {
-        return send(request, FindByNameResponseImpl.class);
+        return send(
+                request,
+                FindByNameResponseImpl.class);
     }
 
     /**
@@ -167,7 +172,7 @@ public class RequestSenderImpl implements RequestSender {
                     responseClassType);
         } catch (JsonProcessingException e) {
             String msg = "cant parse request/response - " + request;
-            logger.error(
+            log.error(
                     msg,
                     e);
             throw new ScMemoryException(

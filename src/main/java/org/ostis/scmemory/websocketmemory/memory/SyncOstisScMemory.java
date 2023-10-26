@@ -86,7 +86,6 @@ import org.ostis.scmemory.websocketmemory.sender.RequestSender;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.lang.annotation.ElementType;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -714,6 +713,11 @@ public class SyncOstisScMemory implements ScMemory {
     public void close() throws Exception {
         ostisClient.close();
         eventOstisClient.close();
+    }
+
+    @Override
+    public boolean isOpen() {
+       return ostisClient.isOpen() && eventOstisClient.isOpen();
     }
 
     private ScPatternElement convertToPatternElement(Object object, ScAliasedElement alias) {
