@@ -98,6 +98,7 @@ import java.util.Optional;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 
@@ -129,7 +130,9 @@ public class SyncOstisScMemory implements ScMemory {
     public SyncOstisScMemory(URI serverURI) {
         ostisClient = new OstisClientSync(
                 serverURI,
-                e->{throw new RuntimeException("Unexpected event: " + e);},
+                e -> {
+                    throw new RuntimeException("Unexpected event: " + e);
+                },
                 "Main client");
         eventOstisClient = new OstisClientSync(
                 serverURI,
@@ -150,8 +153,7 @@ public class SyncOstisScMemory implements ScMemory {
                         addrs);
             }
             case ON_DELETE_ELEMENT -> {
-                ((OnDeleteEvent) eventInfo.getEventConsumer()).onEvent(
-                        eventInfo.getTrackingElement());
+                ((OnDeleteEvent) eventInfo.getEventConsumer()).onEvent(eventInfo.getTrackingElement());
             }
         }
     }
@@ -405,9 +407,9 @@ public class SyncOstisScMemory implements ScMemory {
                     addressesIterator.next();
                 }
                 case TYPE -> {
-                    var element = createScElementByType(
-                            ((ScTypedElement<?>) el).getValue(),
-                            addressesIterator.next());
+                    var element = getScElementTypeTiny(((ScTypedElement<?>) el).getValue(),
+                                                       addressesIterator.next());
+
                     result.add(element);
                     aliases.put(
                             ((ScTypedElement<?>) el).getAlias(),
@@ -415,8 +417,7 @@ public class SyncOstisScMemory implements ScMemory {
                     searchedScElements.put(
                             element.getAddress(),
                             element);
-                }
-                case ADDR -> {
+                } case ADDR -> {
                     ScFixedElement fixedElement = (ScFixedElement) el;
                     result.add(fixedElement.getElement());
                     searchedScElements.put(
@@ -427,8 +428,32 @@ public class SyncOstisScMemory implements ScMemory {
                 }
                 default -> throw new IllegalStateException(ExceptionMessages.sendReportToDeveloper);
             }
-        }
-        return result;
+        } return result;
+    }
+
+    private ScElement getScElementTypeTiny(Object el, Long addr) {
+
+        Supplier<ScElement> element = () -> {
+            if (el instanceof NodeType nodeType) {
+                return new ScNodeImpl(
+                        nodeType,
+                        addr);
+            } else if (el instanceof EdgeType edgeType) {
+                return new ScEdgeImpl(
+                        edgeType,
+                        addr);
+            } else if (el instanceof LinkType linkType) {
+
+
+                try {
+                    return createLinksByAddresses(Stream.of(addr), linkType).findFirst().orElseThrow();
+                } catch (ScMemoryException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            return null;
+        };
+        return element.get();
     }
 
     private Stream<Stream<? extends ScElement>> findPattern(ScPattern pattern) throws ScMemoryException {
@@ -519,7 +544,9 @@ public class SyncOstisScMemory implements ScMemory {
         Callable<CheckScElTypeResponse> task = () -> {
             OstisClient client = new OstisClientSync(
                     requestSender.getAddress(),
-                    e->{throw new RuntimeException("Unexpected event: " + e);},
+                    e -> {
+                        throw new RuntimeException("Unexpected event: " + e);
+                    },
                     "Client for resolving types");
             RequestSender sender = new RequestSenderImpl(client);
             client.open();
@@ -660,8 +687,12 @@ public class SyncOstisScMemory implements ScMemory {
                 event));
         EventResponse res = eventSender.sendEventRequest(request);
         Optional<Long> result = res.getEventIds()
-                                  .findFirst();
-        eventConsumerMap.put(result.get(), new ScEventWebsocketImpl(element, event));
+                                   .findFirst();
+        eventConsumerMap.put(
+                result.get(),
+                new ScEventWebsocketImpl(
+                        element,
+                        event));
         return result;
     }
 
@@ -670,7 +701,8 @@ public class SyncOstisScMemory implements ScMemory {
         FindStringBySubstringRequest request = new FindStringBySubstringRequestImpl();
         request.setRequest(data);
         FindStringBySubstringResponse res = requestSender.sendFindStringBySubstringRequest(request);
-        Optional<List<String>> result = res.getMatches().findFirst();
+        Optional<List<String>> result = res.getMatches()
+                                           .findFirst();
         return result.stream();
     }
 
@@ -678,12 +710,13 @@ public class SyncOstisScMemory implements ScMemory {
     public Stream<Optional<? extends ScElement>> findByName(Stream<String> name) throws ScMemoryException {
         FindByNameRequest request = new FindByNameRequestImpl();
         List<String> content = name.toList();
-        request.addComponent(content.stream().toList());
+        request.addComponent(content.stream()
+                                    .toList());
         FindByNameResponce response = requestSender.sendFindByNameRequest(request);
 
         List<Optional<? extends ScElement>> result = new ArrayList<>(content.size());
         for (List<Long> e : response.getFoundAddresses()
-                              .toList()) {
+                                    .toList()) {
             if (e.get(0) != 0) {
                 ScElement node;
                 node = () -> (e.get(0));
@@ -717,7 +750,7 @@ public class SyncOstisScMemory implements ScMemory {
 
     @Override
     public boolean isOpen() {
-       return ostisClient.isOpen() && eventOstisClient.isOpen();
+        return ostisClient.isOpen() && eventOstisClient.isOpen();
     }
 
     private ScPatternElement convertToPatternElement(Object object, ScAliasedElement alias) {

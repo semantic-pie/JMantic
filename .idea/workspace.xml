@@ -5,15 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4762acc8-a986-4cfb-9f34-d806b8cfd71e" name="Changes" comment="feat: change request sender to add events request">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/JMantic.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/JMantic.main.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/JMantic.main.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ostis/api/context/UncheckedScContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ostis/api/context/UncheckedScContext.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ostis/scmemory/websocketmemory/memory/SyncOstisScMemory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ostis/scmemory/websocketmemory/memory/SyncOstisScMemory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ostis/scmemory/websocketmemory/memory/core/OstisClientSync.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ostis/scmemory/websocketmemory/memory/core/OstisClientSync.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ostis/scmemory/websocketmemory/memory/sender/RequestSenderImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ostis/scmemory/websocketmemory/memory/sender/RequestSenderImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +81,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feat/0.8.0&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;last_opened_file_path&quot;: &quot;/home/artrayme/IdeaProjects/JMantic&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -407,6 +403,8 @@
       <workItem from="1676718558622" duration="22758000" />
       <workItem from="1676745340150" duration="7494000" />
       <workItem from="1698173208567" duration="19000" />
+      <workItem from="1701802472032" duration="3108000" />
+      <workItem from="1701868730132" duration="3058000" />
     </task>
     <task id="LOCAL-00027" summary="test: add test for construction of 7 elements and add some explanation">
       <created>1642683483673</created>
