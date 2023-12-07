@@ -5,8 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4762acc8-a986-4cfb-9f34-d806b8cfd71e" name="Changes" comment="feat: change request sender to add events request">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/JMantic.main.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ostis/scmemory/websocketmemory/memory/SyncOstisScMemory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ostis/scmemory/websocketmemory/memory/SyncOstisScMemory.java" afterDir="false" />
@@ -107,7 +105,7 @@
       <recent name="org.ostis.scmemory.websocketmemory.memory.message.response" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Build">
+  <component name="RunManager" selected="Gradle.SonatypePublishing">
     <configuration name="Build" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -404,7 +402,9 @@
       <workItem from="1676745340150" duration="7494000" />
       <workItem from="1698173208567" duration="19000" />
       <workItem from="1701802472032" duration="3108000" />
-      <workItem from="1701868730132" duration="3058000" />
+      <workItem from="1701868730132" duration="4807000" />
+      <workItem from="1701887317622" duration="25000" />
+      <workItem from="1701956331248" duration="2226000" />
     </task>
     <task id="LOCAL-00027" summary="test: add test for construction of 7 elements and add some explanation">
       <created>1642683483673</created>

@@ -443,15 +443,18 @@ public class SyncOstisScMemory implements ScMemory {
                         edgeType,
                         addr);
             } else if (el instanceof LinkType linkType) {
-
-
                 try {
                     return createLinksByAddresses(Stream.of(addr), linkType).findFirst().orElseThrow();
                 } catch (ScMemoryException e) {
                     throw new RuntimeException(e);
                 }
             }
-            return null;
+            try {
+                Object o = checkElementType(addr);
+                return getScElementTypeTiny(o,addr);
+            } catch (ScMemoryException e) {
+                throw new RuntimeException(e);
+            }
         };
         return element.get();
     }
